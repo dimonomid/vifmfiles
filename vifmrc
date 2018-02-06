@@ -1,0 +1,114 @@
+set timefmt="%d.%m.%g %H:%M:%S"
+colorscheme dfrank
+
+" Tab and Ctrl+I {{{
+"
+" The 't' here is for the Tab to switch active pane; for <c-i> to still work
+" normally we also need to setup the terminal emulator to emit a custom
+" sequence on <c-i>, and map it to :histnext (see below)
+"
+" For the description of other options, see help. I'm sure I like 's', not so
+" sure about 'f'.
+set cpoptions=tfs
+
+" In my Konsole setup, <f1> keycode is emitted when <C-I> is pressed, so
+" here we need to map it to go to the next history entry.
+map <f1> :histnext<cr>
+" }}}
+
+" Searching {{{
+" Responsive search: will be applied as I type the pattern
+set incsearch
+
+" Don't "select" matched files when searching
+set nohlsearch
+
+" Search case-insensitively, BUT search case-sensitively if the pattern
+" contains at least one uppercase char.
+set ignorecase
+set smartcase
+" }}}
+
+" File associations {{{
+" X apps to open for files of various types
+filextype *.jpg,*.jpeg,*.png,*.bmp,*.gif eom %c %i &
+filextype *.pdf atril %c %i &
+filextype *.odt,*.docx,*.doc libreoffice --writer %c %i &
+filextype *.ods,*.xlsx,*.xls libreoffice --calc %c %i &
+
+" Open in gvim everything else (gvex is my wrapper which opens file in the
+" existing instance of gvim, if any)
+filextype * gvex &
+filextype .* gvex &
+
+" And when X is not available, open everything in vim
+filetype .* vim
+filetype * vim
+" }}}
+
+" X Clipboard {{{
+
+" :clip copies the filename to the X clipboard
+command! clip :execute '!echo -n %c | xclip -selection clipboard' | echo "Copied to clipboard: %c"
+" :clipfull copies the full path and filename to the X clipboard
+command! clipfull :execute '!echo -n %d/%c | xclip -selection clipboard' | echo "Copied to clipboard: %d/%c"
+" :clipdir copies the current dir to the X clipboard
+command! clipdir :execute '!echo -n %d | xclip -selection clipboard' | echo "Copied to clipboard: %d"
+
+" TODO: find a way to copy the file itself, e.g. an image, etc.
+" }}}
+
+" Setup conventional "brief" view (found in all other commander-like apps)
+set lsview
+set lsoptions+=transposed
+
+" Backspace should go to the parent dir
+map <bs> gggh
+
+" <C-w>-r (as well as <C-w><C-r>) should swap the panels
+map <c-w>r <c-w>x<c-w><c-w>
+map <c-w><c-r> <c-w>x<c-w><c-w>
+
+" On <C-h> proliferate the left panel to the right panel
+nnoremap <C-h> :winrun ^ cd %D<cr>
+" On <C-l> proliferate the right panel to the left panel
+nnoremap <C-l> :winrun $ cd %D<cr>
+
+" Persist a lot of stuff between vifm invocations
+set vifminfo=bmarks,bookmarks,tui,dhistory,state,cs,savedirs,chistory,shistory,phistory,fhistory,dirstack,registers
+
+" Show dotfiles (to hide them, use zm)
+normal zo
+
+" Always enter into "visual append" mode, and also don't clear selection
+" if `v` is pressed again
+" (not sure it's a very good idea, let's see how it works for me)
+nnoremap v av
+vnoremap v <CR>
+
+" <up> and <down> in command line mode iterate commands which begin from what's
+" already typed, I find it extremely useful. For some reason, <c-p> and <c-n>
+" behave differently, so here we just remap them to <up> and <down>.
+cnoremap <c-p> <up>
+cnoremap <c-n> <down>
+
+" On :cdg command, open my fzf-filtered global shortcuts list,
+" see https://dmitryfrank.com/articles/shell_shortcuts
+command! cdg :execute '!CDSCUTS_RES=$(cdscuts_glob_echo | fzf); if [[ "$CDSCUTS_RES" != "" ]]; then vifm --server-name' v:servername '--remote "+cd $CDSCUTS_RES"; fi'
+map cdg :cdg<cr>
+
+" On :fzf command, search files with fzf
+" TODO: also add command for searching dirs as well, and probably come up with
+" better names
+command! fzf : let $FZF_RES = term('fzf 2>&0')
+            \| if $FZF_RES != ''
+            \|     execute "!echo '".$FZF_RES."' %%U"
+            \|     execute 'normal! gf'
+            \| endif
+
+" On :cmd, open shell
+command! cmd :!zsh
+map cmd :cmd<cr>
+
+" Statusline
+set stl=" %t%= %E %d  %u:%g  [%A] <%{&sort}> Free space: %a"

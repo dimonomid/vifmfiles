@@ -48,14 +48,15 @@ filetype * vim
 
 " X Clipboard {{{
 
-" :clip copies the filename to the X clipboard
-command! clip :execute '!echo -n %c | xclip -selection clipboard' | echo "Copied to clipboard: %c"
-" :clipfull copies the full path and filename to the X clipboard
-command! clipfull :execute '!echo -n %d/%c | xclip -selection clipboard' | echo "Copied to clipboard: %d/%c"
-" :clipdir copies the current dir to the X clipboard
-command! clipdir :execute '!echo -n %d | xclip -selection clipboard' | echo "Copied to clipboard: %d"
-
-" TODO: find a way to copy the file itself, e.g. an image, etc.
+" :xclip copies the filename to the X clipboard
+command! xclipname :execute '!echo -n %c | xclip -selection clipboard' | echo "Copied to clipboard: %c"
+" :xclipfull copies the full path and filename to the X clipboard
+command! xclipfull :execute '!echo -n %d/%c | xclip -selection clipboard' | echo "Copied to clipboard: %d/%c"
+" :xclipdir copies the current dir to the X clipboard
+command! xclipdir :execute '!echo -n %d | xclip -selection clipboard' | echo "Copied to clipboard: %d"
+" :xclip copies file contents to the X clipboard
+" TODO: copies png just fine but for some reason doesn't copy jpeg as an image.
+command! xclip :execute '!xclip -selection clipboard -t $(file -b --mime-type %c) %c' | echo "Copied data to clipboard"
 " }}}
 
 " Setup conventional "brief" view (found in all other commander-like apps)

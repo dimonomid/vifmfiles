@@ -45,7 +45,11 @@
 
 highlight clear
 
-highlight Win cterm=none ctermfg=16 ctermbg=195
+if $USER == "root"
+  highlight Win cterm=none ctermfg=16 ctermbg=95
+else
+  highlight Win cterm=none ctermfg=16 ctermbg=195
+endif
 highlight Directory cterm=bold ctermfg=17 ctermbg=default
 highlight Link cterm=bold ctermfg=202 ctermbg=default
 highlight BrokenLink cterm=bold ctermfg=196 ctermbg=default

@@ -32,7 +32,7 @@ set smartcase
 " File associations {{{
 " X apps to open for files of various types
 filextype *.jpg,*.jpeg,*.png,*.bmp,*.gif,*.svg,*.ico xviewer %c %i &
-filextype *.pdf atril %c %i &
+filextype *.pdf xreader %c %i &
 filextype *.odt,*.docx,*.doc libreoffice --writer %c %i &
 filextype *.ods,*.xlsx,*.xls libreoffice --calc %c %i &
 

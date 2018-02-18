@@ -31,10 +31,11 @@ set smartcase
 
 " File associations {{{
 " X apps to open for files of various types
-filextype *.jpg,*.jpeg,*.png,*.bmp,*.gif,*.svg,*.ico xviewer %c %i &
+filextype *.jpg,*.jpeg,*.png,*.bmp,*.gif,*.svg,*.ico,*.tif xviewer %c %i &
 filextype *.pdf xreader %c %i &
 filextype *.odt,*.docx,*.doc libreoffice --writer %c %i &
 filextype *.ods,*.xlsx,*.xls libreoffice --calc %c %i &
+filextype *.mkv,*.avi,*.mov xplayer %c &
 
 " Open in gvim everything else (gvex is my wrapper which opens file in the
 " existing instance of gvim, if any)

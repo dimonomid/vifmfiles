@@ -35,8 +35,8 @@ filextype *.jpg,*.jpeg,*.png,*.bmp,*.gif,*.svg,*.ico,*.tif xviewer %c %i &
 filextype *.pdf xreader %c %i &
 filextype *.odt,*.docx,*.doc libreoffice --writer %c %i &
 filextype *.ods,*.xlsx,*.xls libreoffice --calc %c %i &
-filextype *.mkv,*.avi,*.mov xplayer %c &
-filextype *.ogg,*.mp3,*.wma,*.wav xplayer %c &
+filextype *.mkv,*.avi,*.mov,*.mp4 vlc %c %i &
+filextype *.ogg,*.mp3,*.wma,*.wav vlc %c %i &
 
 " Open in gvim everything else (gvex is my wrapper which opens file in the
 " existing instance of gvim, if any)

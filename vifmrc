@@ -110,7 +110,8 @@ command! fzf : let $FZF_RES = term('fzf 2>&0')
             \| endif
 
 " On :cmd, open shell
-command! cmd :!zsh
+command! cmdhere :!zsh
+command! cmd :!cmd
 map cmd :cmd<cr>
 
 " Statusline

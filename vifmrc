@@ -80,6 +80,20 @@ nnoremap <C-l> :winrun $ cd %D<cr>
 " Persist a lot of stuff between vifm invocations
 set vifminfo=bmarks,bookmarks,tui,dhistory,state,cs,savedirs,chistory,shistory,phistory,fhistory,dirstack,registers
 
+" Remember plenty of items in all histories (including command line history).
+"
+" I don't fully understand how this limit works though. By default, it's 15,
+" and the help says: "Maximum number of stored items in all histories", and I
+" was living with that default for a long time, and yet when I check
+" ~/.vifm/vifminfo file (the "Command line history" section), I see that it's
+" more than 15: it's rather about 50. At the same time, it's not exact still:
+" sometimes it's like 45, and sometimes it's 55, etc. But, some older items
+" definitely get purged from it somehow once in a while. I didn't understand
+" the code managing history either. But, I empirically found that setting
+" history to 1000 actually does increase the limit, and I now have more items
+" in the history. So, gonna leave it at 1000 and see how it goes.
+set history=1000
+
 " Show dotfiles (to hide them, use zm)
 normal zo
 

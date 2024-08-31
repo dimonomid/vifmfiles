@@ -116,3 +116,8 @@ map cmd :cmd<cr>
 
 " Statusline
 set stl=" %t%= %E %d  %u:%g  [%A] <%{&sort}> Free space: %a"
+
+" Perform file operations (copying, moving etc) internally, using syscalls, as
+" opposed to relying on external applications like cp, mv etc. It's better at
+" least because this way it shows the operation progress nicely.
+set syscalls
